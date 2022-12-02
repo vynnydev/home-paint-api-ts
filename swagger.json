@@ -1,0 +1,744 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Swagger Home Paint API",
+        "description": "API para aplicação de pintura para residências e salas comerciais, com o objetivo de criar calcular o nível de tinta das paredes e a metragem das portas e janelas. Aplicação desenvolvida usando como base a clean architecture, bem escalável e independente de qualquer biblioteca ou framework, utilizando Jest para testes integrados, Clean Architecture para fazer a distribuição de responsabilidades em camadas, seguindo os princípios do SOLID e aplicando Design Patterns.",
+        "termsOfService": "http://localhost:3001/api-docs",
+        "version": "1.0.0"
+    },
+    "servers": [{
+        "url": "http://localhost:3001/api/v1/home-paint",
+        "description": "API de Test"
+    }],
+    "paths": {
+        "/rooms": {
+            "post": {
+                "summary": "Register a Room",
+                "description": "This route will be responsible for registering a room",
+                "tags": ["Rooms"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "room_name": { "type": "string" },
+                                    "owner_name": { "type": "string" }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "summary": "Find Rooms",
+                "description": "This route will be responsible for finding the registered first walls",
+                "tags": ["Rooms"],
+                "responses": {
+                    "404": {
+                        "description": "Route does not found"
+                    },
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Room"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/rooms/{room_alias_id}": {
+            "put": {
+                "description": "Route to upgrade some room",
+                "summary": "Update a room by slug url: (alias_id room data)",
+                "tags": ["Rooms"],
+                "parameters": [{
+                    "name": "room_alias_id",
+                    "in": "path",
+                    "description": "alias_id of room",
+                    "required": true
+                }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "room_name": { "type": "string" },
+                                    "owner_name": { "type": "string" }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Room"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Room does not exist"
+                    }
+                }
+            },
+            "delete": {
+                "description": "Route to delete some room",
+                "summary": "Delete from a first wall by slug url: (alias_id first wall)",
+                "tags": ["Rooms"],
+                "parameters": [{
+                    "name": "room_alias_id",
+                    "in": "path",
+                    "description": "alias_id of room",
+                    "required": true
+                }],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Room"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Room does not exist"
+                    }
+                }
+            }
+        },
+        "/first_walls/{room_alias_id}": {
+            "post": {
+                "summary": "Register a First Wall",
+                "description": "This route will be responsible for registering a first wall",
+                "tags": ["FirstWalls"],
+                "parameters": [{
+                    "name": "room_alias_id",
+                    "in": "path",
+                    "description": "alias_id of room",
+                    "required": true
+                }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "height": { "type": "number", "format": "double" },
+                                    "width": { "type": "number", "format": "double" },
+                                    "door_quantity": { "type": "integer", "format": "int64" },
+                                    "window_quantity": { "type": "integer", "format": "int64" }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/first_walls/{first_wall_id}": {
+            "get": {
+                "summary": "Find First Walls",
+                "description": "This route will be responsible for finding the registered first wall",
+                "tags": ["FirstWalls"],
+                "parameters": [{
+                    "name": "first_wall_id",
+                    "in": "path",
+                    "description": "id of first wall",
+                    "required": true
+                }],
+                "responses": {
+                    "404": {
+                        "description": "Route does not found"
+                    },
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/components/schemas/FirstWall"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Route to upgrade some first wall",
+                "summary": "Update a first wall by slug url: (alias_id first wall data)",
+                "tags": ["FirstWalls"],
+                "parameters": [{
+                    "name": "first_wall_id",
+                    "in": "path",
+                    "description": "id of first wall",
+                    "required": true
+                }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "height": { "type": "number", "format": "double" },
+                                    "width": { "type": "number", "format": "double" },
+                                    "door_quantity": { "type": "integer", "format": "int64" },
+                                    "window_quantity": { "type": "integer", "format": "int64" }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/FirstWall"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "First wall does not exist"
+                    }
+                }
+            },
+            "delete": {
+                "description": "Route to delete some first wall",
+                "summary": "Deletar de uma first wall pela slug url: (alias_id of first wall)",
+                "tags": ["FirstWalls"],
+                "parameters": [{
+                    "name": "first_wall_id",
+                    "in": "path",
+                    "description": "id of first wall",
+                    "required": true
+                }],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/FirstWall"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "First wall does not exist"
+                    }
+                }
+            }
+        },
+        "/second_walls/{room_alias_id}": {
+            "post": {
+                "summary": "Register a Second Wall",
+                "description": "This route will be responsible for registering a second wall",
+                "tags": ["SecondWalls"],
+                "parameters": [{
+                    "name": "room_alias_id",
+                    "in": "path",
+                    "description": "alias_id of room",
+                    "required": true
+                }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "height": { "type": "number", "format": "double" },
+                                    "width": { "type": "number", "format": "double" },
+                                    "door_quantity": { "type": "integer", "format": "int64" },
+                                    "window_quantity": { "type": "integer", "format": "int64" }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/second_walls/{second_wall_id}": {
+            "get": {
+                "summary": "Find Second Walls",
+                "description": "This route will be responsible for finding the registered second wall",
+                "tags": ["SecondWalls"],
+                "parameters": [{
+                    "name": "second_wall_id",
+                    "in": "path",
+                    "description": "id of second wall",
+                    "required": true
+                }],
+                "responses": {
+                    "404": {
+                        "description": "Route does not found"
+                    },
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/components/schemas/SecondWall"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Route to upgrade some second wall",
+                "summary": "Update a second wall by slug url: (alias_id second wall data)",
+                "tags": ["SecondWalls"],
+                "parameters": [{
+                    "name": "second_wall_id",
+                    "in": "path",
+                    "description": "id of second wall",
+                    "required": true
+                }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "height": { "type": "number", "format": "double" },
+                                    "width": { "type": "number", "format": "double" },
+                                    "door_quantity": { "type": "integer", "format": "int64" },
+                                    "window_quantity": { "type": "integer", "format": "int64" }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/SecondWall"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Second wall does not exist"
+                    }
+                }
+            },
+            "delete": {
+                "description": "Route to delete some second wall",
+                "summary": "Deletar de uma second wall pela slug url: (alias_id of second wall)",
+                "tags": ["SecondWalls"],
+                "parameters": [{
+                    "name": "second_wall_id",
+                    "in": "path",
+                    "description": "id of second wall",
+                    "required": true
+                }],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/SecondWall"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Second wall does not exist"
+                    }
+                }
+            }
+        },
+        "/third_walls/{room_alias_id}": {
+            "post": {
+                "summary": "Register a Third Wall",
+                "description": "This route will be responsible for registering a third wall",
+                "tags": ["ThirdWalls"],
+                "parameters": [{
+                    "name": "room_alias_id",
+                    "in": "path",
+                    "description": "alias_id of room",
+                    "required": true
+                }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "height": { "type": "number", "format": "double" },
+                                    "width": { "type": "number", "format": "double" },
+                                    "door_quantity": { "type": "integer", "format": "int64" },
+                                    "window_quantity": { "type": "integer", "format": "int64" }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/third_walls/{third_wall_id}": {
+            "get": {
+                "summary": "Find Third Walls",
+                "description": "This route will be responsible for finding the registered third wall",
+                "tags": ["ThirdWalls"],
+                "parameters": [{
+                    "name": "third_wall_id",
+                    "in": "path",
+                    "description": "id of third wall",
+                    "required": true
+                }],
+                "responses": {
+                    "404": {
+                        "description": "Route does not found"
+                    },
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ThirdWall"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Route to upgrade some third wall",
+                "summary": "Update a third wall by slug url: (alias_id third wall data)",
+                "tags": ["ThirdWalls"],
+                "parameters": [{
+                    "name": "third_wall_id",
+                    "in": "path",
+                    "description": "id of third wall",
+                    "required": true
+                }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "height": { "type": "number", "format": "double" },
+                                    "width": { "type": "number", "format": "double" },
+                                    "door_quantity": { "type": "integer", "format": "int64" },
+                                    "window_quantity": { "type": "integer", "format": "int64" }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ThirdWall"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Third wall does not exist"
+                    }
+                }
+            },
+            "delete": {
+                "description": "Route to delete some third wall",
+                "summary": "Deletar de uma third wall pela slug url: (alias_id of third wall)",
+                "tags": ["ThirdWalls"],
+                "parameters": [{
+                    "name": "third_wall_id",
+                    "in": "path",
+                    "description": "id of third wall",
+                    "required": true
+                }],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ThirdWall"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Third wall does not exist"
+                    }
+                }
+            }
+        },
+        "/fourth_walls/{room_alias_id}": {
+            "post": {
+                "summary": "Register a Fourth Wall",
+                "description": "This route will be responsible for registering a fourth wall",
+                "tags": ["FourthWalls"],
+                "parameters": [{
+                    "name": "room_alias_id",
+                    "in": "path",
+                    "description": "alias_id of room",
+                    "required": true
+                }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "height": { "type": "number", "format": "double" },
+                                    "width": { "type": "number", "format": "double" },
+                                    "door_quantity": { "type": "integer", "format": "int64" },
+                                    "window_quantity": { "type": "integer", "format": "int64" }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/fourth_walls/{fourth_wall_id}": {
+            "get": {
+                "summary": "Find Fourth Walls",
+                "description": "This route will be responsible for finding the registered fourth wall",
+                "tags": ["FourthWalls"],
+                "parameters": [{
+                    "name": "fourth_wall_id",
+                    "in": "path",
+                    "description": "id of fourth wall",
+                    "required": true
+                }],
+                "responses": {
+                    "404": {
+                        "description": "Route does not found"
+                    },
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/FourthWall"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Route to upgrade some fourth wall",
+                "summary": "Update a fourth wall by slug url: (alias_id fourth wall data)",
+                "tags": ["FourthWalls"],
+                "parameters": [{
+                    "name": "fourth_wall_id",
+                    "in": "path",
+                    "description": "id of fourth wall",
+                    "required": true
+                }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "height": { "type": "number", "format": "double" },
+                                    "width": { "type": "number", "format": "double" },
+                                    "door_quantity": { "type": "integer", "format": "int64" },
+                                    "window_quantity": { "type": "integer", "format": "int64" }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/FourthWall"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Fourth wall does not exist"
+                    }
+                }
+            },
+            "delete": {
+                "description": "Route to delete some fourth wall",
+                "summary": "Delete a fourth wall by slug url: (alias_id of fourth wall)",
+                "tags": ["SecondWalls"],
+                "parameters": [{
+                    "name": "fourth_wall_id",
+                    "in": "path",
+                    "description": "id of fourth wall",
+                    "required": true
+                }],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/SecondWall"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Second wall does not exist"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Room": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "string", "format": "string" },
+                    "alias_id": { "type": "string" },
+                    "room_name": { "type": "string" },
+                    "owner_name": { "type": "string" },
+                    "first_wall": {
+                        "id": { "type": "integer", "format": "int64" },
+                        "alias_id": { "type": "string" },
+                        "height": { "type": "number", "format": "double" },
+                        "width": { "type": "number", "format": "double" },
+                        "door_quantity": { "type": "integer", "format": "int64" },
+                        "window_quantity": { "type": "integer", "format": "int64" },
+                        "room_id": { "type": "string" },
+                        "created_at": { "type": "Date" },
+                        "updated_at": { "type": "Date" }
+                    },
+                    "second_wall": {
+                        "id": { "type": "integer", "format": "int64" },
+                        "alias_id": { "type": "string" },
+                        "height": { "type": "number", "format": "double" },
+                        "width": { "type": "number", "format": "double" },
+                        "door_quantity": { "type": "integer", "format": "int64" },
+                        "window_quantity": { "type": "integer", "format": "int64" },
+                        "room_id": { "type": "string" },
+                        "created_at": { "type": "Date" },
+                        "updated_at": { "type": "Date" }
+                    },
+                    "third_wall": {
+                        "id": { "type": "integer", "format": "int64" },
+                        "alias_id": { "type": "string" },
+                        "height": { "type": "number", "format": "double" },
+                        "width": { "type": "number", "format": "double" },
+                        "door_quantity": { "type": "integer", "format": "int64" },
+                        "window_quantity": { "type": "integer", "format": "int64" },
+                        "room_id": { "type": "string" },
+                        "created_at": { "type": "Date" },
+                        "updated_at": { "type": "Date" }
+                    },
+                    "fourth_wall": {
+                        "id": { "type": "integer", "format": "int64" },
+                        "alias_id": { "type": "string" },
+                        "height": { "type": "number", "format": "double" },
+                        "width": { "type": "number", "format": "double" },
+                        "door_quantity": { "type": "integer", "format": "int64" },
+                        "window_quantity": { "type": "integer", "format": "int64" },
+                        "room_id": { "type": "string" },
+                        "created_at": { "type": "Date" },
+                        "updated_at": { "type": "Date" }
+                    },
+                    "created_at": { "type": "Date" },
+                    "updated_at": { "type": "Date" }
+                }
+            },
+            "FirstWall": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "integer", "format": "int64" },
+                    "alias_id": { "type": "string" },
+                    "height": { "type": "number", "format": "double" },
+                    "width": { "type": "number", "format": "double" },
+                    "door_quantity": { "type": "integer", "format": "int64" },
+                    "window_quantity": { "type": "integer", "format": "int64" },
+                    "room_id": { "type": "string" },
+                    "created_at": { "type": "Date" },
+                    "updated_at": { "type": "Date" }
+                }
+            },
+            "SecondWall": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "integer", "format": "int64" },
+                    "alias_id": { "type": "string" },
+                    "height": { "type": "number", "format": "double" },
+                    "width": { "type": "number", "format": "double" },
+                    "door_quantity": { "type": "integer", "format": "int64" },
+                    "window_quantity": { "type": "integer", "format": "int64" },
+                    "room_id": { "type": "string" },
+                    "created_at": { "type": "Date" },
+                    "updated_at": { "type": "Date" }
+                }
+            },
+            "ThirdWall": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "integer", "format": "int64" },
+                    "alias_id": { "type": "string" },
+                    "height": { "type": "number", "format": "double" },
+                    "width": { "type": "number", "format": "double" },
+                    "door_quantity": { "type": "integer", "format": "int64" },
+                    "window_quantity": { "type": "integer", "format": "int64" },
+                    "room_id": { "type": "string" },
+                    "created_at": { "type": "Date" },
+                    "updated_at": { "type": "Date" }
+                }
+            },
+            "FourthWall": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "integer", "format": "int64" },
+                    "alias_id": { "type": "string" },
+                    "height": { "type": "number", "format": "double" },
+                    "width": { "type": "number", "format": "double" },
+                    "door_quantity": { "type": "integer", "format": "int64" },
+                    "window_quantity": { "type": "integer", "format": "int64" },
+                    "room_id": { "type": "string" },
+                    "created_at": { "type": "Date" },
+                    "updated_at": { "type": "Date" }
+                }
+            }
+        }
+    }
+}

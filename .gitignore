@@ -1,0 +1,9 @@
+coverage/
+/.env
+/yarn-error.log
+/.vscode
+env
+/dist/
+dist
+node_modules
+/database

@@ -1,0 +1,27 @@
+{
+    "components": {
+        "examples": {},
+        "headers": {},
+        "parameters": {},
+        "requestBodies": {},
+        "responses": {},
+        "schemas": {},
+        "securitySchemes": {}
+    },
+    "info": {
+        "title": "home-paint-api",
+        "version": "1.0.0",
+        "license": {
+            "name": "MIT"
+        },
+        "contact": {
+            "name": "Vinicius Prudencio",
+            "email": "vynnyprudencio@gmail.com"
+        }
+    },
+    "openapi": "3.0.0",
+    "paths": {},
+    "servers": [{
+        "url": "/"
+    }]
+}
