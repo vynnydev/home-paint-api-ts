@@ -9,10 +9,7 @@ const makeCreateSecondWall = (): ICreateSecondWall => {
   const typeOrmSecondWallRepository =
     typeOrmSecondWallRepositoryFactory.makeTypeOrmSecondWallRepository();
 
-  const createSecondWall = new CreateSecondWall(
-    typeOrmRoomRepository,
-    typeOrmSecondWallRepository,
-  );
+  const createSecondWall = new CreateSecondWall(typeOrmRoomRepository, typeOrmSecondWallRepository);
 
   return createSecondWall;
 };

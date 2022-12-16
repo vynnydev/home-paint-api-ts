@@ -13,7 +13,7 @@ describe('FindSecondWallPresenter', () => {
     const secondWall = mockSecondWallModel.mock();
 
     const httpResponse = await findSecondWallPresenter.reply({
-      data: { secondWall: secondWall },
+      data: { secondWall },
     });
 
     expect(httpResponse.status_code).toBe(200);

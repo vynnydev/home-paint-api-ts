@@ -3,5 +3,5 @@ export default interface ICreateFirstWallDTO {
   width: number;
   door_quantity: number;
   window_quantity: number;
-  room_id: string
+  room_id: string;
 }

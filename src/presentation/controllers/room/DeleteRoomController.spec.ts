@@ -13,10 +13,7 @@ describe('DeleteRoomController', () => {
     fakeDeleteRoom = new FakeDeleteRoom();
     fakeDeleteRoomPresenter = new FakeDeleteRoomPresenter();
 
-    deleteRoomController = new DeleteRoomController(
-      fakeDeleteRoom,
-      fakeDeleteRoomPresenter,
-    );
+    deleteRoomController = new DeleteRoomController(fakeDeleteRoom, fakeDeleteRoomPresenter);
   });
 
   it('should be able to call delete room with correct values', async () => {

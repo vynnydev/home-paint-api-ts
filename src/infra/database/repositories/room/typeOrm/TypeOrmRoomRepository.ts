@@ -9,11 +9,7 @@ import ICreateRoomDTO from '@data/protocols/database/repositories/room/dtos/ICre
 import IUpdateRoomDTO from '@data/protocols/database/repositories/room/dtos/IUpdateRoomDTO';
 
 export default class TypeOrmRoomRepository implements IRoomRepository {
-  public async create({
-    alias_id,
-    room_name,
-    owner_name,
-  }: ICreateRoomDTO): Promise<Room> {
+  public async create({ alias_id, room_name, owner_name }: ICreateRoomDTO): Promise<Room> {
     const createdRoom = getRepository(RoomEntity).create({
       alias_id,
       room_name,

@@ -21,7 +21,7 @@ describe('UpdateThirdWall', () => {
     const createdThirdWall = await fakeThirdWallRepository.create(
       mockThirdWallModel.mock({
         room_id: 'any_room_id',
-       }),
+      }),
     );
 
     const findByRoomId = jest.spyOn(fakeThirdWallRepository, 'findByRoomId');
@@ -61,8 +61,8 @@ describe('UpdateThirdWall', () => {
   it('should be able to call update third wall with correct values', async () => {
     const createdThirdWall = await fakeThirdWallRepository.create(
       mockThirdWallModel.mock({
-        room_id: 'any_room_id'
-       }),
+        room_id: 'any_room_id',
+      }),
     );
 
     const updateSpy = jest.spyOn(fakeThirdWallRepository, 'findByRoomId');
@@ -106,8 +106,8 @@ describe('UpdateThirdWall', () => {
   it('should be able to update third wall', async () => {
     const createdThirdWall = await fakeThirdWallRepository.create(
       mockThirdWallModel.mock({
-        room_id: 'any_room_id'
-       }),
+        room_id: 'any_room_id',
+      }),
     );
 
     const updatedThirdWall = await updateThirdWall.update({

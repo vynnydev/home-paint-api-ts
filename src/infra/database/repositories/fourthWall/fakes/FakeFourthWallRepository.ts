@@ -32,9 +32,7 @@ export default class FakeTypeOrmFourthWallRepository implements IFourthWallRepos
   }
 
   public async findByRoomId(room_id: string): Promise<FourthWall | undefined> {
-    const foundFourthWall = this.FourthWalls.find(
-      fourth_wall => fourth_wall.room_id === room_id,
-    );
+    const foundFourthWall = this.FourthWalls.find(fourth_wall => fourth_wall.room_id === room_id);
 
     return foundFourthWall;
   }

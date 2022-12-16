@@ -9,10 +9,7 @@ const makeCreateFirstWall = (): ICreateFirstWall => {
   const typeOrmFirstWallRepository =
     typeOrmFirstWallRepositoryFactory.makeTypeOrmFirstWallRepository();
 
-  const createFirstWall = new CreateFirstWall(
-    typeOrmRoomRepository,
-    typeOrmFirstWallRepository,
-  );
+  const createFirstWall = new CreateFirstWall(typeOrmRoomRepository, typeOrmFirstWallRepository);
 
   return createFirstWall;
 };

@@ -15,6 +15,7 @@ export default class WindowQuantityValidation implements IValidation {
 
     const isValid = this.windowQuantityValidator.isValid(field);
 
-    if (!isValid) throw new AppError({ message: 'Invalid window quantity value', status_code: 400 });
+    if (!isValid)
+      throw new AppError({ message: 'Invalid window quantity value', status_code: 400 });
   }
 }

@@ -9,7 +9,7 @@ export default class ThirdWall {
 
   window_quantity: number;
 
-  room_id: string
+  room_id: string;
 
   created_at: Date;
 

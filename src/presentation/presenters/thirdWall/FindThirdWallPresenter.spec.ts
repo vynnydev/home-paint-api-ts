@@ -13,7 +13,7 @@ describe('FindThirdWallPresenter', () => {
     const thirdWall = mockThirdWallModel.mock();
 
     const httpResponse = await findThirdWallPresenter.reply({
-      data: { thirdWall: thirdWall },
+      data: { thirdWall },
     });
 
     expect(httpResponse.status_code).toBe(200);
@@ -28,7 +28,7 @@ describe('FindThirdWallPresenter', () => {
         room_id: thirdWall.room_id,
         created_at: thirdWall.created_at,
         updated_at: thirdWall.updated_at,
-        },
+      },
     });
   });
 });

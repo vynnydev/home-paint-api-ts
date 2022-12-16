@@ -176,9 +176,7 @@ describe('TypeOrmRoomRepository', () => {
         owner_name: 'any_owner_name',
       });
 
-      const error = await typeOrmRoomRepository.deleteById(
-        'f0abb9a7-0fb7-43f2-b228-6463cdac2aad',
-      );
+      const error = await typeOrmRoomRepository.deleteById('f0abb9a7-0fb7-43f2-b228-6463cdac2aad');
       const foundRoom = await typeOrmRoomRepository.findByAliasId(createdRoom.alias_id);
 
       expect(error).toBeFalsy();

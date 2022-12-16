@@ -5,7 +5,10 @@ import IController from '@presentation/protocols/IController';
 import IFindFirstWall from '@domain/useCases/firstWall/IFindFirstWall';
 
 export default class FindFirstWallController implements IController {
-  constructor(private readonly findFirstWall: IFindFirstWall, private readonly presenter: IPresenter) {}
+  constructor(
+    private readonly findFirstWall: IFindFirstWall,
+    private readonly presenter: IPresenter,
+  ) {}
 
   public async handle({ params }: IHttpRequest): Promise<IHttpResponse> {
     const { room_id } = params;

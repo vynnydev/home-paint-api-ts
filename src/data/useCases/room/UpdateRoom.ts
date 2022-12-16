@@ -12,8 +12,7 @@ export default class UpdateRoom implements IUpdateRoom {
   public async update({ room_alias_id, data }: IUpdateRoomDTO): Promise<Room> {
     const foundRoom = await this.roomRepository.findByAliasId(room_alias_id);
 
-    if (!foundRoom)
-      throw new AppError({ message: 'Room does not exists', status_code: 400 });
+    if (!foundRoom) throw new AppError({ message: 'Room does not exists', status_code: 400 });
 
     const { room_name, owner_name } = data;
 
@@ -22,8 +21,7 @@ export default class UpdateRoom implements IUpdateRoom {
       data: { room_name, owner_name },
     });
 
-    if (!updatedRoom)
-      throw new AppError({ message: 'Could not update room', status_code: 400 });
+    if (!updatedRoom) throw new AppError({ message: 'Could not update room', status_code: 400 });
 
     return updatedRoom;
   }

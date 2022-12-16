@@ -9,7 +9,8 @@ import UpdateThirdWallValidationFactory from '@main/factories/controllers/thirdW
 const makeUpdateThirdWallController = (): IController => {
   const updateThirdWall = UpdateThirdWallFactory.makeUpdateThirdWall();
   const updateThirdWallPresenter = UpdateThirdWallPresenterFactory.makeUpdateThirdWallPresenter();
-  const updateThirdWallValidation = UpdateThirdWallValidationFactory.makeUpdateThirdWallValidation();
+  const updateThirdWallValidation =
+    UpdateThirdWallValidationFactory.makeUpdateThirdWallValidation();
 
   const updateThirdWallController = new UpdateThirdWallController(
     updateThirdWall,

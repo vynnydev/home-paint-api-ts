@@ -9,7 +9,7 @@ export default class SecondWall {
 
   window_quantity: number;
 
-  room_id: string
+  room_id: string;
 
   created_at: Date;
 

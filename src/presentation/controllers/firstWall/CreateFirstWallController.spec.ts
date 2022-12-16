@@ -82,7 +82,8 @@ describe('CreateFirstWallController', () => {
           width: 10,
           door_quantity: 1,
           window_quantity: 1,
-      }}),
+        },
+      }),
     ).rejects.toBeInstanceOf(Error);
   });
 
@@ -125,7 +126,7 @@ describe('CreateFirstWallController', () => {
         },
         params: {
           room_alias_id: 'any_alias_id',
-        }
+        },
       }),
     ).rejects.toBeInstanceOf(Error);
   });
@@ -173,7 +174,7 @@ describe('CreateFirstWallController', () => {
           width: 10,
           door_quantity: 1,
           window_quantity: 1,
-        }
+        },
       }),
     ).rejects.toBeInstanceOf(Error);
   });

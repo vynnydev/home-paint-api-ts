@@ -12,7 +12,7 @@ export default class CreateFirstWall implements ICreateFirstWall {
   constructor(
     private readonly roomRepository: IRoomRepository,
     private readonly firstWallRepository: IFirstWallRepository,
-  ) { }
+  ) {}
 
   public async create({
     height,

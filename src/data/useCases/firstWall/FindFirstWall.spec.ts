@@ -25,14 +25,14 @@ describe('FindFirstWall', () => {
     const foundFirstWalls = await findFirstWall.find(createdFirstWall.room_id);
 
     expect(foundFirstWalls).toEqual({
-        id: createdFirstWall.id,
-        height: createdFirstWall.height,
-        width: createdFirstWall.width,
-        door_quantity: createdFirstWall.door_quantity,
-        window_quantity: createdFirstWall.window_quantity,
-        room_id: createdFirstWall.room_id,
-        created_at: createdFirstWall.created_at,
-        updated_at: createdFirstWall.updated_at,
-      });
+      id: createdFirstWall.id,
+      height: createdFirstWall.height,
+      width: createdFirstWall.width,
+      door_quantity: createdFirstWall.door_quantity,
+      window_quantity: createdFirstWall.window_quantity,
+      room_id: createdFirstWall.room_id,
+      created_at: createdFirstWall.created_at,
+      updated_at: createdFirstWall.updated_at,
+    });
   });
 });

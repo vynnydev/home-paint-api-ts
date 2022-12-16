@@ -1,13 +1,13 @@
-import '../../infra/datadog/tracer/tracer';
+import '@infra/datadog/tracer/tracer';
 import 'dotenv/config';
 import 'reflect-metadata';
 
 import swaggerUi from 'swagger-ui-express';
-import { app } from '../config/app';
-import swaggerDocument from '../../../swagger.json';
+import { app } from '@main/config/app';
 
-import databaseConnectionManagerFactory from '../factories/helpers/typeOrm/DatabaseConnectionManagerFactory';
-import testDatabaseConnectionManagerFactory from '../factories/helpers/typeOrm/TestDatabaseConnectionManagerFactory';
+import databaseConnectionManagerFactory from '@main/factories/helpers/typeOrm/DatabaseConnectionManagerFactory';
+import testDatabaseConnectionManagerFactory from '@main/factories/helpers/typeOrm/TestDatabaseConnectionManagerFactory';
+import swaggerDocument from '../../../swagger.json';
 
 const startApp = async () => {
   const databaseConnectionManager =

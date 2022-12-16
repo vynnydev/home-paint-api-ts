@@ -20,10 +20,7 @@ describe('CreateFirstWall', () => {
     fakeRoomRepository = new FakeRoomRepository();
     fakeFirstWallRepository = new FakeFirstWallRepository();
 
-    createFirstWall = new CreateFirstWall(
-      fakeRoomRepository,
-      fakeFirstWallRepository,
-    );
+    createFirstWall = new CreateFirstWall(fakeRoomRepository, fakeFirstWallRepository);
   });
 
   it('should be able to call find room by alias id with correct values', async () => {

@@ -8,8 +8,10 @@ import createFourthWallValidationFactory from '@main/factories/controllers/fourt
 
 const makeCreateFourthWallController = (): IController => {
   const createFourthWall = createFourthWallFactory.makeCreateFourthWall();
-  const createFourthWallPresenter = createFourthWallPresenterFactory.makeCreateFourthWallPresenter();
-  const createFourthWallValidation = createFourthWallValidationFactory.makeCreateFourthWallValidation();
+  const createFourthWallPresenter =
+    createFourthWallPresenterFactory.makeCreateFourthWallPresenter();
+  const createFourthWallValidation =
+    createFourthWallValidationFactory.makeCreateFourthWallValidation();
 
   const createFourthWallController = new CreateFourthWallController(
     createFourthWall,

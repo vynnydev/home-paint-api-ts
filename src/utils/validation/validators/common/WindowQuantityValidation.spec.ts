@@ -10,7 +10,10 @@ describe('WindowQuantityValidation', () => {
   beforeAll(() => {
     fakeWindowQuantityValidatorAdapter = new FakeWindowQuantityValidatorAdapter();
 
-    windowQuantityValidation = new WindowQuantityValidation('window_quantity', fakeWindowQuantityValidatorAdapter);
+    windowQuantityValidation = new WindowQuantityValidation(
+      'window_quantity',
+      fakeWindowQuantityValidatorAdapter,
+    );
   });
 
   it('should be able to call is valid with correct values', () => {

@@ -5,9 +5,13 @@ import joiDoorQuantityValidatorAdapterFactory from '@main/factories/adapters/val
 
 const makeDoorQuantityValidation = (): IValidation => {
   const fieldDoorQuantity = 'door_quantity';
-  const joiDoorQuantityValidatorAdapter = joiDoorQuantityValidatorAdapterFactory.makeJoiDoorQuantityValidatorAdapter();
+  const joiDoorQuantityValidatorAdapter =
+    joiDoorQuantityValidatorAdapterFactory.makeJoiDoorQuantityValidatorAdapter();
 
-  const doorQuantityValidation = new DoorQuantityValidation(fieldDoorQuantity, joiDoorQuantityValidatorAdapter);
+  const doorQuantityValidation = new DoorQuantityValidation(
+    fieldDoorQuantity,
+    joiDoorQuantityValidatorAdapter,
+  );
 
   return doorQuantityValidation;
 };

@@ -10,7 +10,10 @@ describe('DoorQuantityValidation', () => {
   beforeAll(() => {
     fakeDoorQuantityValidatorAdapter = new FakeDoorQuantityValidatorAdapter();
 
-    doorQuantityValidation = new DoorQuantityValidation('door_quantity', fakeDoorQuantityValidatorAdapter);
+    doorQuantityValidation = new DoorQuantityValidation(
+      'door_quantity',
+      fakeDoorQuantityValidatorAdapter,
+    );
   });
 
   it('should be able to call is valid with correct values', () => {

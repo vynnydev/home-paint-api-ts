@@ -25,15 +25,14 @@ describe('FindSecondWall', () => {
     const foundSecondWalls = await findSecondWall.find(createdSecondWall.room_id);
 
     expect(foundSecondWalls).toEqual({
-        id: createdSecondWall.id,
-        height: createdSecondWall.height,
-        width: createdSecondWall.width,
-        door_quantity: createdSecondWall.door_quantity,
-        window_quantity: createdSecondWall.window_quantity,
-        room_id: createdSecondWall.room_id,
-        created_at: createdSecondWall.created_at,
-        updated_at: createdSecondWall.updated_at,
-      },
-    );
+      id: createdSecondWall.id,
+      height: createdSecondWall.height,
+      width: createdSecondWall.width,
+      door_quantity: createdSecondWall.door_quantity,
+      window_quantity: createdSecondWall.window_quantity,
+      room_id: createdSecondWall.room_id,
+      created_at: createdSecondWall.created_at,
+      updated_at: createdSecondWall.updated_at,
+    });
   });
 });

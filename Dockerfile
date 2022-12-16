@@ -1,4 +1,4 @@
-FROM node:14.15.4-alpine3.12
+FROM node:16.18-alpine3.16
 
 RUN apk add --no-cache bash
 
@@ -7,6 +7,8 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSI
     && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
     && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
+COPY . /home/node/app
+
 USER node
 
-WORKDIR /home/app/server
+WORKDIR /home/node/app

@@ -1,6 +1,10 @@
 {
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"],
+  "ts-node": {
+      // This can be omitted when using ts-patch
+      "compiler": "typescript"
+  },
   "compilerOptions": {
     "target": "es2020",
     "module": "commonjs",
@@ -13,7 +17,13 @@
     "strictPropertyInitialization": false,
     "baseUrl": ".",
     "typeRoots": ["./node_modules/@types", "./src/@types"],
+    "plugins": [
+      {
+        "transform": "ts-transformer-keys/transformer"
+      }
+    ],
     "paths": {
+      "ts-node": ["tsconfig-paths/register"],
       "@data/*": ["./src/data/*"],
       "@domain/*": ["./src/domain/*"],
       "@infra/*": ["./src/infra/*"],

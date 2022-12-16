@@ -14,6 +14,6 @@ export default class FindFirstWall implements IFindFirstWall {
     if (!foundFirstWall)
       throw new AppError({ message: 'First wall does not exists', status_code: 404 });
 
-    return foundFirstWall
+    return foundFirstWall;
   }
 }

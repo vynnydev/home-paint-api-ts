@@ -7,7 +7,8 @@ import deleteFourthWallPresenterFactory from '@main/factories/presenters/fourthW
 
 const makeDeleteFourthWallController = (): IController => {
   const deleteFourthWall = deleteFourthWallFactory.makeDeleteFourthWall();
-  const deleteFourthWallPresenter = deleteFourthWallPresenterFactory.makeDeleteFourthWallPresenter();
+  const deleteFourthWallPresenter =
+    deleteFourthWallPresenterFactory.makeDeleteFourthWallPresenter();
 
   const deleteFourthWallController = new DeleteFourthWallController(
     deleteFourthWall,

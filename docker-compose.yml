@@ -1,31 +1,32 @@
+version: "3.9"
+
 services:
   server:
-    container_name: home-paint-server
-    entrypoint: dockerize -wait tcp://db:5432 -timeout 40s ./.docker/entrypoint.sh
+    container_name: server
+    entrypoint: dockerize -wait tcp://pgdb:5432 -timeout 40s ./.docker/entrypoint.sh
     build: .
     restart: always
     depends_on:
-      - db
+      - pgdb
+    networks:
+      - microservices
     ports:
-      - "3001:3000"
+      - '3000:3000'
     volumes:
-      - .:/home/app/server
+      - .:/home/node/app
 
-  db:
+  pgdb:
     build: .docker/postgres
-    container_name: home-paint-api-db
+    container_name: psqldatabase
     tty: true
     restart: always
     volumes:
       - ./.docker/dbdata:/var/lib/postgresql/data
       - ./.docker/postgres/docker-postgresql:/docker-entrypoint-initdb.d
+    networks:
+      - microservices
     ports:
-      - '5432:5432'
-    healthcheck:
-      test: "pg_isready -U postgresuser -d dbtest"
-      interval: 2s
-      timeout: 20s
-      retries: 10
+      - 5432:5432
     environment:
       - POSTGRES_MULTIPLE_DATABASES=postgres:dbpaint,postgres:dbtest
       - POSTGRES_PASSWORD=root
@@ -34,14 +35,47 @@ services:
     image: dpage/pgadmin4
     container_name: home-paint-api-pgadmin
     tty: true
+    networks:
+      - microservices
     environment:
       - PGADMIN_DEFAULT_EMAIL=admin@user.com
       - PGADMIN_DEFAULT_PASSWORD=123456
     ports:
       - 9002:80
 
+  sonarqube:
+    image: sonarqube:lts-community
+    restart: unless-stopped
+    environment:
+      - SONARQUBE_JDBC_USERNAME=sonar
+      - SONARQUBE_JDBC_PASSWORD=sonar
+      - SONARQUBE_JDBC_URL=jdbc:postgresql://pgdb:5436/sonarqube
+    networks:
+      - microservices
+    ports:
+      - 9000:9000
+    volumes:
+      - ./sonarqube/conf:/opt/sonarqube/conf
+      - ./sonarqube/data:/opt/sonarqube/data
+      - ./sonarqube/extensions:/opt/sonarqube/extensions
+      - ./sonarqube/bundled-plugins:/opt/sonarqube/lib/bundled-plugins
+
+  jenkins:
+    image: jenkins/jenkins:lts
+    volumes:
+      - ./jenkins/data:/var/jenkins_home
+    networks:
+      - microservices
+    ports:
+      - '8080:8080'
+      - '50000:50000'
+
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
+    networks:
+      - microservices
+    volumes:
+      - "./kafka/zookeeper:/zookeeper"
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
 
@@ -49,9 +83,12 @@ services:
     image: confluentinc/cp-kafka:latest
     depends_on:
       - zookeeper
+    restart: always
+    networks:
+      - microservices
     ports:
-      - "9092:9092"
-      - "9094:9094"
+      - '9092:9092'
+      - '9094:9094'
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
@@ -64,70 +101,171 @@ services:
   control-center:
     image: confluentinc/cp-enterprise-control-center:6.0.1
     hostname: control-center
+    networks:
+      - microservices
     depends_on:
       - kafka
     ports:
-      - "9021:9021"
+      - '9021:9021'
     environment:
       CONTROL_CENTER_BOOTSTRAP_SERVERS: 'kafka:9092'
       CONTROL_CENTER_REPLICATION_FACTOR: 1
       CONTROL_CENTER_CONNECT_CLUSTER: http://kafka-connect:8083
       PORT: 9021
 
-# External systems
-
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.11.2
-    container_name: elasticsearch
+  kafka-connect:
+    image: confluentinc/cp-kafka-connect-base:6.0.0
+    container_name: kafka-connect
+    restart: always
+    depends_on:
+      - zookeeper
+      - kafka
+    networks:
+      - microservices
+    ports:
+      - 8083:8083
     environment:
-      - node.name=elasticsearch
+      CONNECT_BOOTSTRAP_SERVERS: 'kafka:9092'
+      CONNECT_REST_PORT: 8083
+      CONNECT_GROUP_ID: kafka-connect
+      CONNECT_CONFIG_STORAGE_TOPIC: _connect-configs
+      CONNECT_OFFSET_STORAGE_TOPIC: _connect-offsets
+      CONNECT_STATUS_STORAGE_TOPIC: _connect-status
+      CONNECT_KEY_CONVERTER: org.apache.kafka.connect.storage.StringConverter
+      CONNECT_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_INTERNAL_KEY_CONVERTER: 'org.apache.kafka.connect.json.JsonConverter'
+      CONNECT_INTERNAL_VALUE_CONVERTER: 'org.apache.kafka.connect.json.JsonConverter'
+      CONNECT_REST_ADVERTISED_HOST_NAME: 'kafka-connect'
+      CONNECT_LOG4J_ROOT_LOGLEVEL: 'INFO'
+      CONNECT_LOG4J_LOGGERS: 'org.apache.kafka.connect.runtime.rest=WARN,org.reflections=ERROR'
+      CONNECT_LOG4J_APPENDER_STDOUT_LAYOUT_CONVERSIONPATTERN: '[%d] %p %X{connector.context}%m (%c:%L)%n'
+      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: '1'
+      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: '1'
+      CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: '1'
+      # # Optional settings to include to support Confluent Control Center
+      #   CONNECT_PRODUCER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringProducerInterceptor"
+      #   CONNECT_CONSUMER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor"
+      #  ---------------
+      CONNECT_PLUGIN_PATH: /usr/share/java,/usr/share/confluent-hub-components,/data/connect-jars
+    # If you want to use the Confluent Hub installer to d/l component, but make them available
+    # when running this offline, spin up the stack once and then run :
+    #   docker cp kafka-connect:/usr/share/confluent-hub-components ./data/connect-jars
+    volumes:
+      - ./kafka/data:/data
+    # In the command section, $ are replaced with $$ to avoid the error 'Invalid interpolation format for "command" option'
+    command:
+      - bash
+      - -c
+      - |
+        echo "Installing Connector"
+        confluent-hub install --no-prompt debezium/debezium-connector-postgresql:1.9.7
+        confluent-hub install --no-prompt confluentinc/kafka-connect-elasticsearch:10.0.1
+        #
+        echo "Launching Kafka Connect worker"
+        /etc/confluent/docker/run &
+        #
+        sleep infinity
+
+  jaeger:
+    container_name: jaeger_container
+    restart: always
+    image: jaegertracing/all-in-one:1.35
+    environment:
+      - COLLECTOR_ZIPKIN_HTTP_PORT=9411
+    ports:
+      - "5775:5775/udp"
+      - "6831:6831/udp"
+      - "6832:6832/udp"
+      - "5778:5778"
+      - "16686:16686"
+      - "14268:14268"
+      - "14250:14250"
+      - "9411:9411"
+    networks:
+      - microservices
+
+  es01:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.11.2
+    container_name: es01
+    restart: unless-stopped
+    environment:
+      - node.name=es01
       - cluster.name=es-docker-cluster
-      - cluster.initial_master_nodes=elasticsearch
+      - cluster.initial_master_nodes=es01
       - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.type=single-node
+      - 'ES_JAVA_OPTS=-Xms512m -Xmx512m'
+      - xpack.license.self_generated.type=basic
+      - xpack.security.enabled=false
     ulimits:
       memlock:
         soft: -1
         hard: -1
+      nofile:
+        soft: 200000
+        hard: 200000
+    volumes:
+      - ./elasticsearch/es-data01:/usr/share/elasticsearch/data
+    networks:
+      - microservices
     ports:
-      - 9200:9200
-    extra_hosts:
-      - "host.docker.internal:172.17.0.1"
+      - '9200:9200'
+      - '9300:9300'
+    healthcheck:
+      test: curl -s https://elasticsearch:9200 >/dev/null; if [[ $$? == 52 ]]; then echo 0; else echo 1; fi
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
-  kibana:
+  kib01:
     image: docker.elastic.co/kibana/kibana:7.11.2
-    container_name: kibana
+    container_name: kib01
+    restart: unless-stopped
+    networks:
+      - microservices
     ports:
       - 5601:5601
+    depends_on:
+      - es01
+    healthcheck:
+      test: curl -s https://kibana:5601 >/dev/null; if [[ $$? == 52 ]]; then echo 0; else echo 1; fi
+      interval: 30s
+      timeout: 10s
+      retries: 5
     environment:
-      ELASTICSEARCH_URL: http://elasticsearch:9200
-      ELASTICSEARCH_HOSTS: '["http://elasticsearch:9200"]'
+      ELASTICSEARCH_URL: http://es01:9200
+      ELASTICSEARCH_HOSTS: '["http://es01:9200"]'
 
-  jenkins:
-    image: jenkins/jenkins:lts
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
     volumes:
-       - jenkins_data:/var/jenkins_home
-    ports:
-      - '8080:8080'
-      - '50000:50000'
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    networks:
+      - microservices
 
-  connect:
-    build: ./elasticsearch-postgresql/debezium-jdbc-es
+  node_exporter:
+    container_name: node_exporter_container
     restart: always
+    image: prom/node-exporter
     ports:
-      - 8083:8083
-      - 5005:5005
-    links:
-      - kafka
-      - postgres
-      - elasticsearch
-      - kibana
-      - control-center
-    environment:
-      - BOOTSTRAP_SERVERS=kafka:9092
-      - GROUP_ID=1
-      - CONFIG_STORAGE_TOPIC=my_connect_configs
-      - OFFSET_STORAGE_TOPIC=my_connect_offsets
+      - '9101:9100'
+    networks:
+      - microservices
 
-volumes:
-  jenkins_data:
+  grafana:
+    container_name: grafana_container
+    restart: always
+    image: grafana/grafana
+    ports:
+      - '3005:3000'
+    networks:
+      - microservices
+
+networks:
+  microservices:
+    name: microservices

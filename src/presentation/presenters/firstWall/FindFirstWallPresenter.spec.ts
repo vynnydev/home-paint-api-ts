@@ -28,7 +28,7 @@ describe('FindFirstWallPresenter', () => {
         room_id: firstWall.room_id,
         created_at: firstWall.created_at,
         updated_at: firstWall.updated_at,
-        },
+      },
     });
   });
 });

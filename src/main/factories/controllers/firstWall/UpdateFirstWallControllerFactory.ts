@@ -9,7 +9,8 @@ import UpdateFirstWallValidationFactory from '@main/factories/controllers/firstW
 const makeUpdateFirstWallController = (): IController => {
   const updateFirstWall = UpdateFirstWallFactory.makeUpdateFirstWall();
   const updateFirstWallPresenter = UpdateFirstWallPresenterFactory.makeUpdateFirstWallPresenter();
-  const updateFirstWallValidation = UpdateFirstWallValidationFactory.makeUpdateFirstWallValidation();
+  const updateFirstWallValidation =
+    UpdateFirstWallValidationFactory.makeUpdateFirstWallValidation();
 
   const updateFirstWallController = new UpdateFirstWallController(
     updateFirstWall,

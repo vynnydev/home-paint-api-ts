@@ -8,8 +8,10 @@ import createSecondWallValidationFactory from '@main/factories/controllers/secon
 
 const makeCreateSecondWallController = (): IController => {
   const createSecondWall = createSecondWallFactory.makeCreateSecondWall();
-  const createSecondWallPresenter = createSecondWallPresenterFactory.makeCreateSecondWallPresenter();
-  const createSecondWallValidation = createSecondWallValidationFactory.makeCreateSecondWallValidation();
+  const createSecondWallPresenter =
+    createSecondWallPresenterFactory.makeCreateSecondWallPresenter();
+  const createSecondWallValidation =
+    createSecondWallValidationFactory.makeCreateSecondWallValidation();
 
   const createSecondWallController = new CreateSecondWallController(
     createSecondWall,

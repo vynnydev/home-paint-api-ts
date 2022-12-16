@@ -10,8 +10,7 @@ export default class DeleteRoom implements IDeleteRoom {
   public async delete(room_alias_id: string): Promise<void> {
     const foundRoom = await this.roomRepository.findByAliasId(room_alias_id);
 
-    if (!foundRoom)
-      throw new AppError({ message: 'Room does not exists', status_code: 400 });
+    if (!foundRoom) throw new AppError({ message: 'Room does not exists', status_code: 400 });
 
     await this.roomRepository.deleteById(foundRoom.id);
   }

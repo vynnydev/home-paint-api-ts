@@ -13,6 +13,6 @@ export default class DeleteFirstWall implements IDeleteFirstWall {
     if (!foundFirstWall)
       throw new AppError({ message: 'First wall does not exists', status_code: 400 });
 
-    await this.firstWallRepository.deleteById(foundFirstWall.id)
+    await this.firstWallRepository.deleteById(foundFirstWall.id);
   }
 }

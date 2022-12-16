@@ -7,8 +7,7 @@ import CreateRoom from '@data/useCases/room/CreateRoom';
 
 const makeCreateRoom = (): ICreateRoom => {
   const aliasGenerator = aliasGeneratorFactory.makeAliasGenerator();
-  const typeOrmRoomRepository =
-    typeOrmRoomRepositoryFactory.makeTypeOrmRoomRepository();
+  const typeOrmRoomRepository = typeOrmRoomRepositoryFactory.makeTypeOrmRoomRepository();
 
   const createRoom = new CreateRoom(typeOrmRoomRepository, aliasGenerator);
 

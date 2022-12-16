@@ -10,10 +10,7 @@ describe('HeightValidation', () => {
   beforeAll(() => {
     fakeHeightValidatorAdapter = new FakeHeightValidatorAdapter();
 
-    heightValidation = new HeightValidation(
-      'height',
-      fakeHeightValidatorAdapter,
-    );
+    heightValidation = new HeightValidation('height', fakeHeightValidatorAdapter);
   });
 
   it('should be able to call is valid with correct values', () => {

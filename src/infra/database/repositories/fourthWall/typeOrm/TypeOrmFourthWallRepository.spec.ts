@@ -40,8 +40,8 @@ describe('TypeOrmFourthWallRepository', () => {
   describe('create()', () => {
     it('should be able to create fourth wall', async () => {
       const createdFourthWall = await typeOrmFourthWallRepository.create({
-        height: 2.30,
-        width: 2.30,
+        height: 2.3,
+        width: 2.3,
         door_quantity: 1,
         window_quantity: 1,
         room_id: room.id,
@@ -49,8 +49,8 @@ describe('TypeOrmFourthWallRepository', () => {
 
       expect(createdFourthWall).toEqual({
         id: createdFourthWall.id,
-        height: 2.30,
-        width: 2.30,
+        height: 2.3,
+        width: 2.3,
         door_quantity: 1,
         window_quantity: 1,
         room_id: room.id,
@@ -63,19 +63,21 @@ describe('TypeOrmFourthWallRepository', () => {
   describe('findByRoomId()', () => {
     it('should be able to find fourth wall', async () => {
       const createdFourthWall = await typeOrmFourthWallRepository.create({
-        height: 2.30,
-        width: 2.30,
+        height: 2.3,
+        width: 2.3,
         door_quantity: 1,
         window_quantity: 1,
         room_id: room.id,
       });
 
-      const foundFourthWall = await typeOrmFourthWallRepository.findByRoomId(createdFourthWall.room_id);
+      const foundFourthWall = await typeOrmFourthWallRepository.findByRoomId(
+        createdFourthWall.room_id,
+      );
 
       expect(foundFourthWall).toEqual({
         id: createdFourthWall.id,
-        height: 2.30,
-        width: 2.30,
+        height: 2.3,
+        width: 2.3,
         door_quantity: 1,
         window_quantity: 1,
         room_id: room.id,
@@ -86,8 +88,8 @@ describe('TypeOrmFourthWallRepository', () => {
 
     it('should be able to return undefined if fourth wall does not exists', async () => {
       await typeOrmFourthWallRepository.create({
-        height: 2.30,
-        width: 2.30,
+        height: 2.3,
+        width: 2.3,
         door_quantity: 1,
         window_quantity: 1,
         room_id: room.id,
@@ -104,8 +106,8 @@ describe('TypeOrmFourthWallRepository', () => {
   describe('update()', () => {
     it('should be able to update fourth wall', async () => {
       const createdFourthWall = await typeOrmFourthWallRepository.create({
-        height: 2.30,
-        width: 2.30,
+        height: 2.3,
+        width: 2.3,
         door_quantity: 1,
         window_quantity: 1,
         room_id: room.id,
@@ -113,13 +115,13 @@ describe('TypeOrmFourthWallRepository', () => {
 
       const updatedFourthWall = await typeOrmFourthWallRepository.update({
         id: createdFourthWall.id,
-        data: { height: 2.50, },
+        data: { height: 2.5 },
       });
 
       expect(updatedFourthWall).toEqual({
         id: createdFourthWall.id,
-        height: 2.50,
-        width: 2.30,
+        height: 2.5,
+        width: 2.3,
         door_quantity: 1,
         window_quantity: 1,
         created_at: createdFourthWall.created_at,
@@ -129,8 +131,8 @@ describe('TypeOrmFourthWallRepository', () => {
 
     it('should be able to return undefined if fourth wall does not exists', async () => {
       const createdFourthWall = await typeOrmFourthWallRepository.create({
-        height: 2.30,
-        width: 2.30,
+        height: 2.3,
+        width: 2.3,
         door_quantity: 1,
         window_quantity: 1,
         room_id: room.id,
@@ -138,7 +140,7 @@ describe('TypeOrmFourthWallRepository', () => {
 
       const updatedFourthWall = await typeOrmFourthWallRepository.update({
         id: 'f0abb9a7-0fb7-43f2-b228-6463cdac2aad',
-        data: { height: 2.50, },
+        data: { height: 2.5 },
       });
 
       const foundFourthWall = await typeOrmFourthWallRepository.findByRoomId(
@@ -148,8 +150,8 @@ describe('TypeOrmFourthWallRepository', () => {
       expect(updatedFourthWall).toBeUndefined();
       expect(foundFourthWall).toEqual({
         id: createdFourthWall.id,
-        height: 2.30,
-        width: 2.30,
+        height: 2.3,
+        width: 2.3,
         door_quantity: 1,
         window_quantity: 1,
         room_id: room.id,
@@ -162,15 +164,17 @@ describe('TypeOrmFourthWallRepository', () => {
   describe('deleteById()', () => {
     it('should be able to delete fourth wall', async () => {
       const createdFourthWall = await typeOrmFourthWallRepository.create({
-        height: 2.30,
-        width: 2.30,
+        height: 2.3,
+        width: 2.3,
         door_quantity: 1,
         window_quantity: 1,
         room_id: room.id,
       });
 
       const error = await typeOrmFourthWallRepository.deleteById(createdFourthWall.id);
-      const foundFourthWall = await typeOrmFourthWallRepository.findByRoomId(createdFourthWall.room_id);
+      const foundFourthWall = await typeOrmFourthWallRepository.findByRoomId(
+        createdFourthWall.room_id,
+      );
 
       expect(error).toBeFalsy();
       expect(foundFourthWall).toBeUndefined();
@@ -178,8 +182,8 @@ describe('TypeOrmFourthWallRepository', () => {
 
     it('should be able to do nothing if fourth wall does not exists', async () => {
       const createdFourthWall = await typeOrmFourthWallRepository.create({
-        height: 2.30,
-        width: 2.30,
+        height: 2.3,
+        width: 2.3,
         door_quantity: 1,
         window_quantity: 1,
         room_id: room.id,
@@ -188,13 +192,15 @@ describe('TypeOrmFourthWallRepository', () => {
       const error = await typeOrmFourthWallRepository.deleteById(
         'f0abb9a7-0fb7-43f2-b228-6463cdac2aad',
       );
-      const foundFourthWall = await typeOrmFourthWallRepository.findByRoomId(createdFourthWall.room_id);
+      const foundFourthWall = await typeOrmFourthWallRepository.findByRoomId(
+        createdFourthWall.room_id,
+      );
 
       expect(error).toBeFalsy();
       expect(foundFourthWall).toEqual({
         id: createdFourthWall.id,
-        height: 2.30,
-        width: 2.30,
+        height: 2.3,
+        width: 2.3,
         door_quantity: 1,
         window_quantity: 1,
         room_id: room.id,

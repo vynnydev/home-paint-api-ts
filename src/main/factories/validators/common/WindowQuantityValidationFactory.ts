@@ -5,9 +5,13 @@ import joiWindowQuantityValidatorAdapterFactory from '@main/factories/adapters/v
 
 const makeWindowQuantityValidation = (): IValidation => {
   const fieldWindowQuantity = 'window_quantity';
-  const joiWindowQuantityValidatorAdapter = joiWindowQuantityValidatorAdapterFactory.makeJoiWindowQuantityValidatorAdapter();
+  const joiWindowQuantityValidatorAdapter =
+    joiWindowQuantityValidatorAdapterFactory.makeJoiWindowQuantityValidatorAdapter();
 
-  const windowQuantityValidation = new WindowQuantityValidation(fieldWindowQuantity, joiWindowQuantityValidatorAdapter);
+  const windowQuantityValidation = new WindowQuantityValidation(
+    fieldWindowQuantity,
+    joiWindowQuantityValidatorAdapter,
+  );
 
   return windowQuantityValidation;
 };

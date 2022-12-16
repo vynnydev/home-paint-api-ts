@@ -13,7 +13,10 @@ export default class UpdateFirstWall implements IUpdateFirstWall {
     const foundFirstWall = await this.employeeRepository.findByRoomId(room_id);
 
     if (!foundFirstWall)
-      throw new AppError({ message: 'First wall does not exists or is inactive', status_code: 400 });
+      throw new AppError({
+        message: 'First wall does not exists or is inactive',
+        status_code: 400,
+      });
 
     const { height, width, door_quantity, window_quantity } = data;
 

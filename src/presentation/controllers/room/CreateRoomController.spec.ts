@@ -23,9 +23,7 @@ describe('CreateRoomController', () => {
     fakeCreateRoom = new FakeCreateRoom();
     fakeCreateRoomPresenter = new FakeCreateRoomPresenter();
 
-    validationComposite = new ValidationComposite([
-      fakeNameValidation,
-    ]);
+    validationComposite = new ValidationComposite([fakeNameValidation]);
 
     createRoomController = new CreateRoomController(
       fakeCreateRoom,

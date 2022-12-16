@@ -81,7 +81,8 @@ describe('CreateSecondWallController', () => {
           width: 10,
           door_quantity: 1,
           window_quantity: 1,
-      }}),
+        },
+      }),
     ).rejects.toBeInstanceOf(Error);
   });
 

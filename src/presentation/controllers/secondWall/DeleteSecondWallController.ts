@@ -5,7 +5,10 @@ import IPresenter from '@presentation/protocols/IPresenter';
 import IDeleteSecondWall from '@domain/useCases/secondWall/IDeleteSecondWall';
 
 export default class DeleteSecondWallController implements IController {
-  constructor(private readonly deleteSecondWall: IDeleteSecondWall, private readonly presenter: IPresenter) {}
+  constructor(
+    private readonly deleteSecondWall: IDeleteSecondWall,
+    private readonly presenter: IPresenter,
+  ) {}
 
   public async handle({ params }: IHttpRequest): Promise<IHttpResponse> {
     const { room_id } = params;

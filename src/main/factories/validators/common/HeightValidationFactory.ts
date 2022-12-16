@@ -5,7 +5,8 @@ import joiHeightValidatorAdapterFactory from '@main/factories/adapters/validator
 
 const makeHeightValidation = (): IValidation => {
   const fieldHeight = 'height';
-  const joiHeightValidatorAdapter = joiHeightValidatorAdapterFactory.makeJoiHeightValidatorAdapter();
+  const joiHeightValidatorAdapter =
+    joiHeightValidatorAdapterFactory.makeJoiHeightValidatorAdapter();
 
   const heightValidation = new HeightValidation(fieldHeight, joiHeightValidatorAdapter);
 

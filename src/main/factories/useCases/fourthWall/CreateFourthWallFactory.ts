@@ -9,10 +9,7 @@ const makeCreateFourthWall = (): ICreateFourthWall => {
   const typeOrmFourthWallRepository =
     typeOrmFourthWallRepositoryFactory.makeTypeOrmFourthWallRepository();
 
-  const createFourthWall = new CreateFourthWall(
-    typeOrmRoomRepository,
-    typeOrmFourthWallRepository,
-  );
+  const createFourthWall = new CreateFourthWall(typeOrmRoomRepository, typeOrmFourthWallRepository);
 
   return createFourthWall;
 };

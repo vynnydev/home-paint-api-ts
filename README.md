@@ -15,7 +15,7 @@
 
 ## Description
 
-> API para aplicação NPS, com o objetivo de criar transações de avaliações do cliente/colaborador/loja, desenvolvida usando como base uma arquitetura bem definida e desacoplada, utilizando Jest para testes integrados, Clean Architecture para fazer a distribuição de responsabilidades em camadas, seguindo os princípios do SOLID e aplicando Design Patterns.
+> API para aplicação de pintura para residências e salas comerciais, com o objetivo de criar calcular o nível de tinta das paredes e a metragem das portas e janelas. Aplicação desenvolvida usando como base a clean architecture, bem escalável e independente de qualquer biblioteca ou framework, utilizando Jest para testes integrados, Clean Architecture para fazer a distribuição de responsabilidades em camadas, seguindo os princípios do SOLID e aplicando Design Patterns.
 <br />
 
 ### Instalação dos pacotes :wrench:
@@ -30,46 +30,6 @@
 
 > http://localhost:3000/api-docs
 <br />
-
-> ![alt text](./documentation/open-api/swagger-nps.gif)
-
-<br /><br/>
-
-> ### Diagrama de modelagem do banco de dados :page_facing_up:
->
-> ![alt text](./documentation/img/diagram.png)
-
-<br />
-
-> ## Arquitetura da API:
-> ![alt text](./documentation/img/clean-architecture.jpg)
-
-<br />
-
-> ### Verifique o slug url da entidade para atualização, remoção/desativação:
-
-> ![alt text](./documentation/insomnia/img/slug-urls-environment.jpg)
-
-<br />
-
-> ### Exemplo da URL de transação:
-
-> ![alt text](./documentation/insomnia/img/transaction-example-slugs-url.jpg)
-
-<br />
-
-> ## testes
-
-- ###### Para executar todos os testes: yarn test:ci
-
-> ![alt text](./documentation/jest/gif/test-coverage.gif)
-
-<br />
-
-- ###### Para executar somente um teste: yarn test:verbose caminho_do_arquivo
-
-> ![alt text](./documentation/jest/img/unit-test.png)
-
 
 > ## Princípios :books:
 

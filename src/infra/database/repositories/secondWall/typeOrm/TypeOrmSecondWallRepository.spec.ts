@@ -95,7 +95,9 @@ describe('TypeOrmSecondWallRepository', () => {
         room_id: room.id,
       });
 
-      const foundSecondWall = await typeOrmSecondWallRepository.findByRoomId('non_existing_room_id');
+      const foundSecondWall = await typeOrmSecondWallRepository.findByRoomId(
+        'non_existing_room_id',
+      );
 
       expect(foundSecondWall).toBeUndefined();
     });

@@ -14,10 +14,7 @@ describe('FindRoomsController', () => {
 
     fakeFindRoomsPresenter = new FakeFindRoomsPresenter();
 
-    findRoomsController = new FindRoomsController(
-      fakeFindRooms,
-      fakeFindRoomsPresenter,
-    );
+    findRoomsController = new FindRoomsController(fakeFindRooms, fakeFindRoomsPresenter);
   });
 
   it('should be able to handle find rooms', async () => {

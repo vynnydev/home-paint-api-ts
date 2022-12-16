@@ -4,8 +4,7 @@ import IDeleteRoom from '@domain/useCases/room/IDeleteRoom';
 import DeleteRoom from '@data/useCases/room/DeleteRoom';
 
 const makeDeleteRoom = (): IDeleteRoom => {
-  const typeOrmRoomRepository =
-    typeOrmRoomRepositoryFactory.makeTypeOrmRoomRepository();
+  const typeOrmRoomRepository = typeOrmRoomRepositoryFactory.makeTypeOrmRoomRepository();
 
   const deleteRoom = new DeleteRoom(typeOrmRoomRepository);
 

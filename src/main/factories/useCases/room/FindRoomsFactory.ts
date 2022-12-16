@@ -4,8 +4,7 @@ import IFindRooms from '@domain/useCases/room/IFindRooms';
 import FindRooms from '@data/useCases/room/FindRooms';
 
 const makeFindRooms = (): IFindRooms => {
-  const typeOrmRoomRepository =
-    typeOrmRoomRepositoryFactory.makeTypeOrmRoomRepository();
+  const typeOrmRoomRepository = typeOrmRoomRepositoryFactory.makeTypeOrmRoomRepository();
 
   const findRooms = new FindRooms(typeOrmRoomRepository);
 

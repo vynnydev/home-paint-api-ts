@@ -5,10 +5,7 @@ import IPresenter from '@presentation/protocols/IPresenter';
 import IDeleteRoom from '@domain/useCases/room/IDeleteRoom';
 
 export default class DeleteRoomController implements IController {
-  constructor(
-    private readonly deleteRoom: IDeleteRoom,
-    private readonly presenter: IPresenter,
-  ) {}
+  constructor(private readonly deleteRoom: IDeleteRoom, private readonly presenter: IPresenter) {}
 
   public async handle({ params }: IHttpRequest): Promise<IHttpResponse> {
     const { room_alias_id } = params;

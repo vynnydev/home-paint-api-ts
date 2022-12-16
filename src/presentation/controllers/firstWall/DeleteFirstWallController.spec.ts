@@ -13,7 +13,10 @@ describe('DeleteFirstWallController', () => {
     fakeDeleteFirstWall = new FakeDeleteFirstWall();
     fakeDeleteFirstWallPresenter = new FakeDeleteFirstWallPresenter();
 
-    deleteFirstWallController = new DeleteFirstWallController(fakeDeleteFirstWall, fakeDeleteFirstWallPresenter);
+    deleteFirstWallController = new DeleteFirstWallController(
+      fakeDeleteFirstWall,
+      fakeDeleteFirstWallPresenter,
+    );
   });
 
   it('should be able to call delete first wall with correct values', async () => {

@@ -9,7 +9,8 @@ import createFirstWallValidationFactory from '@main/factories/controllers/firstW
 const makeCreateFirstWallController = (): IController => {
   const createFirstWall = createFirstWallFactory.makeCreateFirstWall();
   const createFirstWallPresenter = createFirstWallPresenterFactory.makeCreateFirstWallPresenter();
-  const createFirstWallValidation = createFirstWallValidationFactory.makeCreateFirstWallValidation();
+  const createFirstWallValidation =
+    createFirstWallValidationFactory.makeCreateFirstWallValidation();
 
   const createFirstWallController = new CreateFirstWallController(
     createFirstWall,
